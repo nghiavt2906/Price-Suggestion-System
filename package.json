@@ -5,6 +5,9 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "server": "nodemon",
+    "client": "npm start --prefix client",
+    "dev": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Vo Trong Nghia",
