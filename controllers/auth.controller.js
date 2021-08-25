@@ -14,14 +14,13 @@ class AuthController {
 			const isValidPass = await bcrypt.compare(password, userInDb.passwordHash)
 			if (!isValidPass) return res.status(400).send('Invalid credentials')
 
-			const token = await jwt.sign({ username, id: result._id }, process.env.jwtSecret, { expiresIn: '5h' })
+			const token = await jwt.sign({ username, id: userInDb._id }, process.env.jwtSecret, { expiresIn: '5h' })
 
-			res.status(200).json({ result: userInDb, token })
+			res.status(200).send(token)
 		} catch (error) {
-
+			console.log(`Error: ${error}`)
+			res.status(500).send('Something went wrong')
 		}
-
-		return res.statusCode(200)
 	}
 
 	static async register(req, res) {
@@ -35,10 +34,10 @@ class AuthController {
 
 			const result = await User.create({ username, passwordHash })
 
-			res.statusCode(200)
+			res.sendStatus(200)
 		} catch (error) {
 			console.log(`Error: ${error}`)
-			res.status(404).send('Something went wrong.')
+			res.status(500).send('Something went wrong')
 		}
 	}
 }
