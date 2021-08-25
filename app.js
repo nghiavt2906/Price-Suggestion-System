@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import express from "express";
 
@@ -14,6 +15,8 @@ const app = express()
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+
+app.use(cookieParser())
 
 app.use('/api/auth', authRoute)
 

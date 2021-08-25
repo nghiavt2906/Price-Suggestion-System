@@ -16,6 +16,8 @@ class AuthController {
 
 			const token = await jwt.sign({ username, id: userInDb._id }, process.env.jwtSecret, { expiresIn: '5h' })
 
+			res.cookie('token', token, { httpOnly: true })
+
 			res.status(200).send(token)
 		} catch (error) {
 			console.log(`Error: ${error}`)
@@ -32,7 +34,7 @@ class AuthController {
 
 			const passwordHash = await bcrypt.hash(password, 12)
 
-			const result = await User.create({ username, passwordHash })
+			await User.create({ username, passwordHash })
 
 			res.sendStatus(200)
 		} catch (error) {
