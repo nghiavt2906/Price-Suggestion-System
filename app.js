@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import express from "express";
 
 import authRoute from "./routes/auth.js";
+import userRoute from "./routes/user.js";
+import checkAuth from "./middlewares/checkAuth.js";
 
 dotenv.config()
 
@@ -14,6 +16,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use('/api/auth', authRoute)
+
+app.use(checkAuth)
+app.use('/api/user', userRoute)
 
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
