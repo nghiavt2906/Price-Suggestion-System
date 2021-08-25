@@ -5,6 +5,13 @@ class AuthController {
 	}
 
 	static async register(req, res) {
+		const { username, password } = req.body
+
+		try {
+
+		} catch (error) {
+
+		}
 
 		return res.statusCode(200)
 	}
