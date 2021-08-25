@@ -5,6 +5,21 @@ import User from "../models/user.js";
 
 class AuthController {
 	static async login(req, res) {
+		const { username, password } = req.body
+
+		try {
+			const userInDb = await User.findOne({ username })
+			if (!userInDb) return res.status(404).send('User not found')
+
+			const isValidPass = await bcrypt.compare(password, userInDb.passwordHash)
+			if (!isValidPass) return res.status(400).send('Invalid credentials')
+
+			const token = await jwt.sign({ username, id: result._id }, process.env.jwtSecret, { expiresIn: '5h' })
+
+			res.status(200).json({ result: userInDb, token })
+		} catch (error) {
+
+		}
 
 		return res.statusCode(200)
 	}
@@ -20,9 +35,7 @@ class AuthController {
 
 			const result = await User.create({ username, passwordHash })
 
-			const token = await jwt.sign({ username, id: result._id }, process.env.jwtSecret, { expiresIn: '5h' })
-
-			res.status(200).send(token)
+			res.statusCode(200)
 		} catch (error) {
 			console.log(`Error: ${error}`)
 			res.status(404).send('Something went wrong.')
