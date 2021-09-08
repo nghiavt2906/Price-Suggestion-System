@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 
-function Body() {
+function Home() {
   return (
     <Container className="mt-3">
       <h1>Hello</h1>
@@ -9,4 +9,4 @@ function Body() {
   );
 }
 
-export default Body;
+export default Home;
