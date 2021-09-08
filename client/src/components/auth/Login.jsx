@@ -17,7 +17,7 @@ function Login() {
         data,
         { validateStatus: false }
       );
-      console.log(res);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
