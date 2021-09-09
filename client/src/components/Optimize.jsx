@@ -1,34 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 
 function Optimize() {
+  const [name, setName] = useState('');
+  const [brand, setBrand] = useState('');
+  const [category, setCategory] = useState('');
+  const [condition, setCondition] = useState(0);
+  const [shipping, setShipping] = useState(0);
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = { name, brand, category, condition, shipping, description };
+    console.log(data);
+  };
+
   return (
     <Container className="mt-3">
       <h3>Price suggestion panel</h3>
 
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="text" placeholder="Product name" />
+          <Form.Label>Product name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Product name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="brand">
           <Form.Label>Brand name</Form.Label>
-          <Form.Select aria-label="Floating label select example">
+          <Form.Select onChange={(e) => setBrand(e.target.value)}>
             <option>none brand</option>
-            <option value="1">Razer</option>
-            <option value="2">Nike</option>
-            <option value="3">Adidas</option>
-            <option value="4">OEM</option>
-            <option value="5">Sony</option>
+            <option value="Razer">Razer</option>
+            <option value="Nike">Nike</option>
+            <option value="Adidas">Adidas</option>
+            <option value="OEM">OEM</option>
+            <option value="Sony">Sony</option>
           </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="category">
           <Form.Label>Category name</Form.Label>
-          <Form.Select aria-label="Floating label select example">
+          <Form.Select onChange={(e) => setCategory(e.target.value)}>
             <option>none category</option>
-            <option value="1">Men/Tops/T-shirts</option>
+            <option value="Men/Tops/T-shirts">Men/Tops/T-shirts</option>
             <option value="2">
               Electronics/Computers & Tablets/Components & Parts
             </option>
@@ -40,7 +59,7 @@ function Optimize() {
 
         <Form.Group className="mb-3" controlId="productCondition">
           <Form.Label>Product condition</Form.Label>
-          <Form.Select aria-label="Floating label select example">
+          <Form.Select onChange={(e) => setCondition(e.target.value)}>
             <option>none condition</option>
             <option value="1">Very bad</option>
             <option value="2">Bad</option>
@@ -52,11 +71,10 @@ function Optimize() {
 
         <Form.Group className="mb-3" controlId="shipping">
           <Form.Label>Shipping method</Form.Label>
-          <Form.Select aria-label="Floating label select example">
+          <Form.Select onChange={(e) => setShipping(e.target.value)}>
             <option>none shipping</option>
-            <option value="1">Post delivery</option>
-            <option value="2">Airline</option>
-            <option value="3">Sea</option>
+            <option value="0">Free (paid by seller)</option>
+            <option value="1">Paid</option>
           </Form.Select>
         </Form.Group>
 
@@ -66,6 +84,8 @@ function Optimize() {
             as="textarea"
             placeholder="Product description"
             style={{ height: '100px' }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Group>
 
