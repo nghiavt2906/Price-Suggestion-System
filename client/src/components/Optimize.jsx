@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 function Optimize() {
   const [name, setName] = useState('');
@@ -9,11 +10,20 @@ function Optimize() {
   const [shipping, setShipping] = useState(0);
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = { name, brand, category, condition, shipping, description };
-    console.log(data);
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_END_POINT}/api/product/suggestPrice`,
+        data,
+        { validateStatus: false }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
