@@ -6,6 +6,7 @@ import express from "express";
 
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
+import productRoute from "./routes/product";
 import checkAuth from "./middlewares/checkAuth.js";
 
 dotenv.config()
@@ -20,8 +21,9 @@ app.use(cookieParser())
 
 app.use('/api/auth', authRoute)
 
-app.use(checkAuth)
+// app.use(checkAuth)
 app.use('/api/user', userRoute)
+app.use('/api/product', productRoute)
 
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
