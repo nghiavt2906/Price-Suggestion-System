@@ -1,6 +1,6 @@
 import joblib
-# import keras as ks
 import pandas as pd
+import numpy as np
 
 def preprocess(df: pd.DataFrame) -> pd.DataFrame:
     df['name'] = df['name'].fillna('') + ' ' + df['brand_name'].fillna('')
@@ -17,10 +17,11 @@ def main():
 		"item_description":["This keyboard is in great condition and works like it came out of the box. All of the ports are tested and work perfectly. The lights are customizable via the Razer Synapse app on your PC."]
 	}
 
-	df = pd.DataFrame(input)
-	print(df)
-	print(df.info())
+	encoder = joblib.load('./AI models/encoder.h5')
 
+	df = pd.DataFrame(input)
+	X = encoder.transform(preprocess(df)).astype(np.float32)
+	print(X)
 
 if __name__ == '__main__':
 	main()
