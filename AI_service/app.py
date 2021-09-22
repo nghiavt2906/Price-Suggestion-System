@@ -34,7 +34,7 @@ def suggest_price(input):
 	pred = np.mean([pred_1, pred_2, pred_3, pred_4], axis=0)
 	pred = np.expm1(scaler.inverse_transform(pred.reshape(-1, 1))[:, 0])
 
-	print(pred[0])
+	return pred[0]
 
 @app.route('/')
 def index():
