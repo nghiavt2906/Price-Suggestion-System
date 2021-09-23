@@ -6,7 +6,7 @@ import express from "express";
 
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
-import productRoute from "./routes/product";
+import productRoute from "./routes/product.js";
 import checkAuth from "./middlewares/checkAuth.js";
 
 dotenv.config()

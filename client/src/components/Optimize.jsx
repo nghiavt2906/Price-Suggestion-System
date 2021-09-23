@@ -13,10 +13,17 @@ function Optimize() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = { name, brand, category, condition, shipping, description };
+    const data = {
+      name,
+      brand_name: brand,
+      category_name: category,
+      item_condition_id: parseInt(condition),
+      shipping: parseInt(shipping),
+      item_description: description,
+    };
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_END_POINT}/api/product/suggestPrice`,
+        `${process.env.REACT_APP_AI_SERVICE_URL}/predict`,
         data,
         { validateStatus: false }
       );
@@ -82,7 +89,7 @@ function Optimize() {
         <Form.Group className="mb-3" controlId="shipping">
           <Form.Label>Shipping method</Form.Label>
           <Form.Select onChange={(e) => setShipping(e.target.value)}>
-            <option>none shipping</option>
+            <option>select shipping type</option>
             <option value="0">Free (paid by seller)</option>
             <option value="1">Paid</option>
           </Form.Select>

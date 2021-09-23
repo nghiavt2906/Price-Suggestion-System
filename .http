@@ -1,0 +1,11 @@
+POST http://4292-35-237-75-192.ngrok.io/predict HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Mario Kart DS",
+    "item_condition_id": 3,
+    "category_name": "Electronics/Video Games & Consoles/Games",
+    "brand_name": "Nintendo",
+    "shipping": 0,
+    "item_description":"Yes. This game will work on any model DS."
+}

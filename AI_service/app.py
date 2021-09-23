@@ -1,10 +1,17 @@
-import joblib
+import joblib, os; os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import pandas as pd
 import numpy as np
 from keras.models import load_model
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
+
+encoder = joblib.load('./AI models/encoder.h5')
+scaler = joblib.load('./AI models/scaler.h5')
+model_1 = load_model('./AI models/model_1.h5')
+model_b_1 = load_model('./AI models/model_b_1.h5')
+model_2 = load_model('./AI models/model_2.h5')
+model_b_2 = load_model('./AI models/model_b_2.h5')
 
 def preprocess(df: pd.DataFrame) -> pd.DataFrame:
     df['name'] = df['name'].fillna('') + ' ' + df['brand_name'].fillna('')
@@ -14,13 +21,6 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
 def suggest_price(input):
 	for key in input:
 		input[key] = [input[key]]
-
-	encoder = joblib.load('./AI models/encoder.h5')
-	scaler = joblib.load('./AI models/scaler.h5')
-	model_1 = load_model('./AI models/model_1.h5')
-	model_b_1 = load_model('./AI models/model_b_1.h5')
-	model_2 = load_model('./AI models/model_2.h5')
-	model_b_2 = load_model('./AI models/model_b_2.h5')
 
 	df = pd.DataFrame(input)
 	X = encoder.transform(preprocess(df)).astype(np.float32)
@@ -48,7 +48,7 @@ def predict():
 	else:
 		prediction = suggest_price(data)
 
-	return jsonify(prediction)
+	return jsonify({ "price": prediction})
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0',debug=True)

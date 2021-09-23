@@ -37,7 +37,7 @@ def main():
 	pred = np.mean([pred_1, pred_2, pred_3, pred_4], axis=0)
 	pred = np.expm1(scaler.inverse_transform(pred.reshape(-1, 1))[:, 0])
 
-	print(pred)
+	print(pred[0])
 
 
 if __name__ == '__main__':
