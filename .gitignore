@@ -1,4 +1,6 @@
 .env
+test.tsv
+test.xlsx
 
 node_modules/
 restApi/
