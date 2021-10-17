@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
 function Optimize() {
@@ -9,6 +9,8 @@ function Optimize() {
   const [condition, setCondition] = useState(0);
   const [shipping, setShipping] = useState(0);
   const [description, setDescription] = useState('');
+  const [price, setPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,21 +24,27 @@ function Optimize() {
       item_description: description,
     };
     try {
+      setIsLoading(true);
       const res = await axios.post(
         `${process.env.REACT_APP_AI_SERVICE_URL}/predict`,
         data,
         { validateStatus: false }
       );
-      console.log(res.data);
+      setPrice(res.data.price.toFixed(3));
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <Container className="mt-3">
+    <Container className="mt-3 px-3 py-3">
       <h3>Price suggestion panel</h3>
-
+      {price == 0 ? (
+        <span>Please upload product infos</span>
+      ) : (
+        <span>Suggested price: {price}$</span>
+      )}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Product name</Form.Label>
@@ -106,8 +114,18 @@ function Optimize() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Submit
+        <Button variant="primary" type="submit" disabled={isLoading}>
+          {isLoading && (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="mr-2"
+            />
+          )}
+          {isLoading ? ' Loading...' : 'Submit'}
         </Button>
       </Form>
     </Container>
