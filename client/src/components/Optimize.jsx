@@ -1,47 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { Container, Table } from 'react-bootstrap';
 import XLSX from 'xlsx';
-import axios from 'axios';
 import TableBody from './TableBody';
 
 function Optimize() {
-  const [name, setName] = useState('');
-  const [brand, setBrand] = useState('');
-  const [category, setCategory] = useState('');
-  const [condition, setCondition] = useState(0);
-  const [shipping, setShipping] = useState(0);
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-
   const formFileRef = useRef(null);
 
   const [data, setData] = useState([]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const data = {
-      name,
-      brand_name: brand,
-      category_name: category,
-      item_condition_id: parseInt(condition),
-      shipping: parseInt(shipping),
-      item_description: description,
-    };
-    try {
-      setIsLoading(true);
-      const res = await axios.post(
-        `${process.env.REACT_APP_AI_SERVICE_URL}/predict`,
-        data,
-        { validateStatus: false }
-      );
-      setPrice(res.data.price.toFixed(3));
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleUpload = () => {
     let file = formFileRef.current.files[0];
@@ -115,7 +80,7 @@ function Optimize() {
             <th>Condition</th>
             <th>Shipping</th>
             <th>Description</th>
-            <th>Status</th>
+            <th>Price</th>
             <th>Actions</th>
           </tr>
         </thead>
