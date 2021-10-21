@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import Details from './Details';
+import getShippingLabel from '../utils/getShippingLabel';
+import getProductConditionLabel from '../utils/getProductConditionLabel';
 
 function TableBody({ data }) {
   const nullCellLabel = 'empty';
   const [rows, setRows] = useState(data);
 
   const [modalShow, setModalShow] = useState(false);
+  const [currentIdx, setCurrentIdx] = useState(-1);
 
   const handleCloseModal = () => setModalShow(false);
   const handleShowModal = (data) => {
-    console.log(data);
     setModalShow(true);
+    setCurrentIdx(data.id);
   };
 
   useEffect(() => {
@@ -30,6 +33,7 @@ function TableBody({ data }) {
           );
 
           const newRows = [...rows];
+          newRows[idx].id = idx;
           newRows[idx].price = res.data.price.toFixed(3);
           setRows(newRows);
         }
@@ -47,8 +51,8 @@ function TableBody({ data }) {
             <td>{row.name}</td>
             <td>{row.category_name ?? nullCellLabel}</td>
             <td>{row.brand_name ?? nullCellLabel}</td>
-            <td>{row.item_condition_id}</td>
-            <td>{row.shipping}</td>
+            <td>{getProductConditionLabel(row.item_condition_id)}</td>
+            <td>{getShippingLabel(row.shipping)}</td>
             <td>{row.item_description ?? nullCellLabel}</td>
             <td style={{ color: row.price === undefined ? 'white' : 'green' }}>
               {row.price !== undefined ? '$' + row.price : 'pending...'}
@@ -77,7 +81,11 @@ function TableBody({ data }) {
           </tr>
         ))}
       </tbody>
-      <Details show={modalShow} handleClose={handleCloseModal} />
+      <Details
+        show={modalShow}
+        handleClose={handleCloseModal}
+        data={currentIdx >= 0 ? rows[currentIdx] : null}
+      />
     </>
   );
 }
