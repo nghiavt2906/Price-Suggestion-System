@@ -36,3 +36,8 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #0d6efd; 
 }
+
+.modal-90w {
+  max-width: none !important;
+  width: 90vw !important;
+}
