@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import axios from 'axios';
+import Details from './Details';
 
 function TableBody({ data }) {
   const nullCellLabel = 'empty';
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(data);
 
-  useEffect(() => {
-    setRows(data);
-  }, [data]);
+  const [modalShow, setModalShow] = useState(false);
 
-  console.log(rows, data);
+  const handleCloseModal = () => setModalShow(false);
+  const handleShowModal = (data) => {
+    console.log(data);
+    setModalShow(true);
+  };
 
   useEffect(() => {
     const req = async () => {
@@ -34,44 +37,48 @@ function TableBody({ data }) {
     };
 
     req();
-  });
+  }, []);
 
   return (
-    <tbody>
-      {rows.map((row) => (
-        <tr>
-          <td>{row.name}</td>
-          <td>{row.category_name ?? nullCellLabel}</td>
-          <td>{row.brand_name ?? nullCellLabel}</td>
-          <td>{row.item_condition_id}</td>
-          <td>{row.shipping}</td>
-          <td>{row.item_description ?? nullCellLabel}</td>
-          <td style={{ color: row.price === undefined ? 'white' : 'green' }}>
-            {row.price !== undefined ? '$' + row.price : 'pending...'}
-          </td>
-          <td>
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={row.price === undefined ? true : false}
-              style={{ width: '6rem' }}
-            >
-              {row.price === undefined ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                  style={{ marginRight: '0.2rem' }}
-                />
-              ) : null}
-              Details
-            </Button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
+    <>
+      <tbody>
+        {rows.map((row) => (
+          <tr key={row.name}>
+            <td>{row.name}</td>
+            <td>{row.category_name ?? nullCellLabel}</td>
+            <td>{row.brand_name ?? nullCellLabel}</td>
+            <td>{row.item_condition_id}</td>
+            <td>{row.shipping}</td>
+            <td>{row.item_description ?? nullCellLabel}</td>
+            <td style={{ color: row.price === undefined ? 'white' : 'green' }}>
+              {row.price !== undefined ? '$' + row.price : 'pending...'}
+            </td>
+            <td>
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={row.price === undefined ? true : false}
+                style={{ width: '6rem' }}
+                onClick={() => handleShowModal(row)}
+              >
+                {row.price === undefined ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                    style={{ marginRight: '0.2rem' }}
+                  />
+                ) : null}
+                Details
+              </Button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+      <Details show={modalShow} handleClose={handleCloseModal} />
+    </>
   );
 }
 

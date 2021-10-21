@@ -36,57 +36,63 @@ function Optimize() {
   };
 
   return (
-    <Container className="mt-3 px-3 py-3">
-      <h3>Price suggestion panel</h3>
+    <>
+      <Container className="mt-3 px-3 py-3">
+        <h3>Price suggestion panel</h3>
 
-      <form className="my-3">
-        <div className="row mb-1">
-          <div className="col-md-4">
-            <input className="form-control" type="file" ref={formFileRef} />
-          </div>
+        <form className="my-3">
+          <div className="row mb-1">
+            <div className="col-md-4">
+              <input className="form-control" type="file" ref={formFileRef} />
+            </div>
 
-          <div
-            className="col-md-2"
-            style={{
-              display: 'flex',
-              justifyContent: 'start',
-              alignItems: 'flex-end',
-            }}
-          >
-            <div className="btn btn-primary" id="upload" onClick={handleUpload}>
-              Upload
+            <div
+              className="col-md-2"
+              style={{
+                display: 'flex',
+                justifyContent: 'start',
+                alignItems: 'flex-end',
+              }}
+            >
+              <div
+                className="btn btn-primary"
+                id="upload"
+                onClick={handleUpload}
+              >
+                Upload
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
 
-      <Table
-        striped
-        bordered
-        hover
-        variant="dark"
-        style={{
-          overflow: 'auto',
-          display: 'block',
-          height: '32rem',
-          width: '100%',
-        }}
-      >
-        <thead>
-          <tr>
-            <th>Product name</th>
-            <th>Category name</th>
-            <th>Brand</th>
-            <th>Condition</th>
-            <th>Shipping</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <TableBody data={data}></TableBody>
-      </Table>
-    </Container>
+        <Table
+          striped
+          bordered
+          hover
+          variant="dark"
+          style={{
+            overflow: 'auto',
+            display: 'block',
+            height: '32rem',
+            width: '100%',
+          }}
+        >
+          <thead>
+            <tr>
+              <th>Product name</th>
+              <th>Category name</th>
+              <th>Brand</th>
+              <th>Condition</th>
+              <th>Shipping</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          {data.length > 0 ? <TableBody data={data}></TableBody> : null}
+        </Table>
+      </Container>
+    </>
   );
 }
 
