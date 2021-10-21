@@ -2,9 +2,21 @@ import React from 'react';
 import { Button, Modal, Table } from 'react-bootstrap';
 import getProductConditionLabel from '../utils/getProductConditionLabel';
 import getShippingLabel from '../utils/getShippingLabel';
+import ProgressBar from '@ramonak/react-progress-bar';
 
 function Details({ show, handleClose, data }) {
-  console.log(data);
+  const rgbToHex = (r, g, b) =>
+    '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+  const percentToRGB = (percent) => {
+    const redAndGreen = (512 * percent) / 100;
+    return redAndGreen > 255
+      ? [2 * 255 - redAndGreen, 255, 0]
+      : [255, redAndGreen, 0];
+  };
+
+  const percent = 50;
+
   return (
     <Modal show={show} onHide={handleClose} dialogClassName="modal-90w">
       <Modal.Header closeButton>
@@ -68,8 +80,16 @@ function Details({ show, handleClose, data }) {
                 floral kimono -never worn -lightweight and perfect for hot
                 weather
               </td>
-              <td>9.463</td>
-              <td></td>
+              <td style={{ color: 'green' }}>
+                <b>$9.463</b>
+              </td>
+              <td style={{ width: '12%' }}>
+                <ProgressBar
+                  completed={percent}
+                  bgColor={rgbToHex(...percentToRGB(percent))}
+                  labelAlignment="outside"
+                />
+              </td>
             </tr>
           </tbody>
         </Table>

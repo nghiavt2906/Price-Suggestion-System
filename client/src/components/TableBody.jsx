@@ -55,7 +55,7 @@ function TableBody({ data }) {
             <td>{getShippingLabel(row.shipping)}</td>
             <td>{row.item_description ?? nullCellLabel}</td>
             <td style={{ color: row.price === undefined ? 'white' : 'green' }}>
-              {row.price !== undefined ? '$' + row.price : 'pending...'}
+              <b>{row.price !== undefined ? '$' + row.price : 'pending...'}</b>
             </td>
             <td>
               <Button
