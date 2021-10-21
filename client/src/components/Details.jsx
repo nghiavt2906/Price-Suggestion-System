@@ -33,6 +33,13 @@ function Details({ show, handleClose, data }) {
             <br />
             <span>
               <b>Description:</b> {data.item_description}
+            </span>{' '}
+            <br />
+            <span>
+              <h4 style={{ display: 'inline' }}>Predicted price: </h4>
+              <b style={{ fontSize: '1.5rem', color: 'green' }}>
+                ${data.price}
+              </b>
             </span>
           </>
         )}
