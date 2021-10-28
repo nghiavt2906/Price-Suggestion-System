@@ -1,11 +1,9 @@
-POST http://4292-35-237-75-192.ngrok.io/predict HTTP/1.1
+POST http://bf00-35-199-8-216.ngrok.io/compare HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Mario Kart DS",
-    "item_condition_id": 3,
-    "category_name": "Electronics/Video Games & Consoles/Games",
-    "brand_name": "Nintendo",
-    "shipping": 0,
-    "item_description":"Yes. This game will work on any model DS."
+    "name": "AVA-VIV Blouse",
+    "category_name": "Women/Tops & Blouses/Blouse",
+    "brand_name": "Target",
+    "item_description": "Adorable top with a hint of lace and a key hole in the back! The pale pink is a 1X, and I also have a 3X available in white!"
 }
